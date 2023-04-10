@@ -1,0 +1,36 @@
+@media (min-width: 428px) {
+    .reservations-table {
+        font-size: 11px;
+        padding-left: 2px;
+        padding-right: 2px;
+        margin-left: 0px;
+        margin-right: 2px;
+        text-overflow: ellipsis;
+    }
+
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .reservations-table {
+        font-size: 14px;
+        padding-left: 2px;
+        padding-right: 2px;
+        margin-left: 0px;
+        margin-right: 2px;
+        text-overflow: ellipsis;
+    }
+
+}
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .reservations-table {
+        font-size: 18px;
+        padding-left: 2px;
+        padding-right: 2px;
+        margin-left: 0px;
+        margin-right: 2px;
+        text-overflow: ellipsis;
+    }
+
+}

@@ -1,0 +1,35 @@
+@media (min-width: 428px) {
+    .table-btn {
+        font-size: 10pt;
+    }
+
+    .manage-btn {
+        width: 45px;
+        padding: 2px;
+    }
+   
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+    .table-btn {
+        font-size: 10pt;
+    }
+
+    .manage-btn {
+        width: 45px;
+        padding: 2px;
+    }
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .table-btn {
+        font-size: 10pt;
+    }
+
+    .manage-btn {
+        width: 60px;
+        padding: 5px;
+    }
+}
