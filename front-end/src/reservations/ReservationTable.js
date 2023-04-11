@@ -10,7 +10,7 @@ export default function ReservationsTable({reservations, isSearchTable, findClic
     const criteria = {
     first_name: "First Name",
     last_name: "Last Name",
-    people: "Qty",
+    people: "Qty", 
     reservation_time: "Time",
     mobile_number: "Mobile Number",
     status: "Status"
