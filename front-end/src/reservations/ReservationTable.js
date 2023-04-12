@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import {SeatButton, EditButton, CancelButton} from "../buttons/Buttons";
 import "./Reservations.css";
+// import {Dashboard} from "../dashboard/Dashboard"
 
 // used in both the dashboard and the search pages
 // isSearchTable and findClicked are particular to the search page
 // only displaying certain pieces of data/information accordingly
-export default function ReservationsTable({reservations, isSearchTable, findClicked, loadDashboard}){
+export default function ReservationsTable({loadDashboard,reservations, isSearchTable, findClicked}){
 
     const criteria = {
     first_name: "First Name",
@@ -23,9 +24,12 @@ export default function ReservationsTable({reservations, isSearchTable, findClic
     criteriaDisplay.push("Manage");
 
     useEffect(() => {
-        loadDashboard();
-      }, [loadDashboard]);
-
+        if (isSearchTable && findClicked) {
+            // do nothing
+        } else {
+            // loadDashboard();
+        }
+    }, [isSearchTable, findClicked]);
 
     // only displays the seat button if the reservation status is "booked"
     const ReservationRows = () => {
@@ -49,7 +53,7 @@ export default function ReservationsTable({reservations, isSearchTable, findClic
                         }
                         <td>
                             {reservation.status === "booked" && <EditButton reservation_id={reservation.reservation_id} />}
-                            { (reservation.status !== "cancelled" && reservation.status !== "finished") && <CancelButton reservation_id={reservation.reservation_id} loadDashboard={loadDashboard} /> }
+                            { (reservation.status !== "cancelled" && reservation.status !== "finished") && <CancelButton reservation_id={reservation.reservation_id} /> }
                         </td>
                      
                     </tr>
@@ -60,7 +64,7 @@ export default function ReservationsTable({reservations, isSearchTable, findClic
                         <AllRows />
                         <td>
                             { reservation.status === "booked" && <EditButton reservation_id={reservation.reservation_id} /> }
-                            { (reservation.status !== "cancelled" && reservation.status !== "finished") && <CancelButton reservation_id={reservation.reservation_id} loadDashboard={loadDashboard} /> }
+                            { (reservation.status !== "cancelled" && reservation.status !== "finished") && <CancelButton reservation_id={reservation.reservation_id} /> }
                         </td>
                     </tr>
                 )
@@ -102,9 +106,7 @@ export default function ReservationsTable({reservations, isSearchTable, findClic
     return (
         <div className="row-fluid">
             <div className="col-12 reservations-table">
-
                 {reservations.length > 0 ? <ReservationsTable /> : <NoReservations />}
-
             </div>
         </div>
     )

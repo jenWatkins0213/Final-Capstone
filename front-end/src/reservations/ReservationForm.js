@@ -23,8 +23,8 @@ export default function ReservationForm() {
   const { reservation_id = null } = useParams();
   const [existingReservation, setExistingReservation] = useState({});
 
-  const loadReservation = () => {
-    if (!reservation_id) return;
+  // const loadReservation = () => {
+  //   if (!reservation_id) return;
 
     getReservationById(reservation_id)
       .then((reservation) => {
@@ -38,7 +38,7 @@ export default function ReservationForm() {
         setExistingReservation(reservation);
       })
       .catch((err) => console.log("there was an error: ", err));
-  };
+  // };
 
   // refreshes data on reservations upon page load
   useEffect(() => {

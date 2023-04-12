@@ -1,18 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import ErrorAlert from "../layout/ErrorAlert";
-
 import ReservationsTable from "../reservations/ReservationTable";
 import ReservationsNavigation from "../reservations/ReservationNavigation";
-
 import TablesList from "../tables/TablesList";
 import "./Dashboard.css";
 
-/**
- * Defines the dashboard page.
- * @param date
- *  the date for which the user wants to view reservations.
- * @returns {JSX.Element}
- */
 function Dashboard({
   date,
   reservations,
@@ -21,10 +13,13 @@ function Dashboard({
   tablesError,
   loadDashboard,
 }) {
-  // reloads reservation and table data
-  useEffect(() => {
+  const memoizedLoadDashboard = useCallback(() => {
     loadDashboard();
-  }, [date, loadDashboard]);
+  }, [loadDashboard]);
+
+  useEffect(() => {
+    memoizedLoadDashboard();
+  }, [memoizedLoadDashboard]);
 
   return (
     <main>
@@ -43,13 +38,13 @@ function Dashboard({
             <ReservationsTable
               reservations={reservations}
               isSearchTable={false}
-              loadDashboard={loadDashboard}
+              loadDashboard={memoizedLoadDashboard}
             />
           </div>
           <div className="col-xs-12 col-md-4 col-lg-4">
             <TablesList
               tables={tables}
-              loadDashboard={loadDashboard}
+              loadDashboard={memoizedLoadDashboard}
               tablesError={tablesError}
             />
           </div>

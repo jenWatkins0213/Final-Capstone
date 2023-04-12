@@ -4,26 +4,21 @@ import { getReservationById, updateTable } from "../utils/api";
 import { useParams, useHistory } from "react-router-dom";
 
 // particular to the reservation seat page
-export default function ReservationSeat({
-  tables,
-  loadDashboard,
-}) {
+export default function ReservationSeat({ tables }) {
   const [tableAssignmentError, setTableAssignmentError] = useState(null);
   const [selectedTable, setSelectedTable] = useState(0);
   const { reservation_id } = useParams();
   const [reservationInfo, setReservationInfo] = useState({});
   const history = useHistory();
 
-  function loadReservation() {
+  useEffect(() => {
     const abortController = new AbortController();
     getReservationById(reservation_id, abortController.signal)
       .then(setReservationInfo)
       .catch(setTableAssignmentError);
 
     return () => abortController.abort();
-  }
-
-  useEffect(loadReservation, [reservation_id]);
+  }, [reservation_id]);
 
   const handleTableAssignmentSubmit = (evt) => {
     evt.preventDefault();
@@ -35,11 +30,9 @@ export default function ReservationSeat({
       };
 
       updateTable(requestBody)
-        .then(loadDashboard)
         .then(() => {
           history.push(`/dashboard?date=${reservationInfo.reservation_date}`);
         })
-        .then(loadDashboard)
         .catch((err) => {
           if (err) setTableAssignmentError(err);
         });

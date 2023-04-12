@@ -1,12 +1,12 @@
-import React, { useEffect } from "react";
+// import React, { useEffect } from "react";
 import { resetTable } from "../utils/api";
 import "./tablesList.css";
 
 // displays the tables data in a list off to the right of the page
 export default function TablesList({ tables, loadDashboard, tablesError }) {
-  useEffect(() => {
-    loadDashboard();
-  }, [loadDashboard]);
+  // useEffect(() => {
+  //   loadDashboard();
+  // }, []);
 
   async function handleFinishTable(evt) {
     evt.preventDefault();
