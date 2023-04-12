@@ -1,27 +1,27 @@
-/* Small devices (tablets, 768px and up) */
-@media (min-width: 428px) {
-    .nav-option {
-        font-size: 10pt;
-        padding: 0px;
-    }
+li, h4 {
+    background:
+      linear-gradient(
+        to right,
+        rgb(255, 255, 255),
+        rgb(252, 252, 252)
+      ),
+      linear-gradient(
+        to right,
+        rgba(255, 0, 0, 1),
+        rgba(255, 0, 180, 1),
+        rgba(0, 100, 200, 1)
+    );
+    background-size: 100% 3px, 0 3px;
+    background-position: 100% 100%, 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 400ms;
+  }
+  
+  li:hover {
+    background-size: 0 3px, 100% 3px;
+  }
 
-    .navbar {
-        width: 100%;
-    }
-}
-
-/* Medium devices (desktops, 992px and up) */
-@media (min-width: 992px) {
-    .nav-option {
-        font-size: 14pt;
-        padding: 0px;
-    }
-}
-
-/* Large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
-    .nav-option {
-        font-size: 16pt;
-        padding: 0px;
-    }
-}
+  li{
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }

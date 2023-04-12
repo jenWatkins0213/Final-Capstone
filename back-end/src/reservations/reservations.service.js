@@ -1,35 +1,31 @@
-const knex = require("../db/connection");
-const tableName = "reservations";
+const knex = require("../db/connection.js");
 
-function create(params) {
-  return knex(tableName)
-    .insert(params)
-    .returning("*")
-    .then((savedData) => {
-      return savedData[0];
-    });
-}
-
-function list(query) {
-  return knex(tableName)
-    .where(query)
+function list(reservation_date) {
+  return knex("reservations")
     .select("*")
-    .orderBy("reservation_time", "asc");
+    .where({ reservation_date })
+    .whereNot({ status: "finished" })
+    .whereNot({ status: "cancelled" })
+    .orderBy("reservation_time");
 }
 
-function getById(reservation_id) {
-  return knex(tableName)
-    .where({ reservation_id })
-    .then((savedData) => savedData[0])
-    .catch(() => {});
-}
-
-function updateStatus(reservation_id, status) {
-  return knex(tableName)
-    .where({ reservation_id })
-    .update({ status })
+function create(newReservation) {
+  return knex("reservations")
+    .insert(newReservation)
     .returning("*")
-    .then((savedData) => savedData[0]);
+    .then((createdRecords) => createdRecords[0]);
+}
+
+function read(reservation_id) {
+  return knex("reservations").select("*").where({ reservation_id }).first();
+}
+
+function updateStatus(reservation) {
+  return knex("reservations")
+    .select("*")
+    .where({ reservation_id: reservation.reservation_id })
+    .update({ status: reservation.status }, "*")
+    .then((records) => records[0]);
 }
 
 function search(mobile_number) {
@@ -41,19 +37,19 @@ function search(mobile_number) {
     .orderBy("reservation_date");
 }
 
-function editReservation(reservation_id, data) {
+function update(updatedReservation) {
   return knex("reservations")
-    .where({ reservation_id })
-    .update(data)
-    .returning("*")
-    .then((savedData) => savedData[0]);
+    .select("*")
+    .where({ reservation_id: updatedReservation.reservation_id })
+    .update(updatedReservation, "*")
+    .then((createdRecords) => createdRecords[0]);
 }
 
 module.exports = {
-  create,
   list,
-  getById,
+  read,
+  create,
   updateStatus,
   search,
-  editReservation,
+  update,
 };
