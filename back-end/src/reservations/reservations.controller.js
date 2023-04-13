@@ -55,6 +55,9 @@ function validDate(req, res, next) {
 
 function validateReservation(req, res, next) {
   const { data = {} } = req.body;
+  const { reservation_date, reservation_time } = req.body.data;
+  const reservation = new Date(`${reservation_date} PDT`).setHours(reservation_time.substring(0, 2), reservation_time.substring(3));
+  const now = Date.now();
   let temp_reservation_time =
     data["reservation_time"] && data["reservation_time"].replace(":", "");
   if (new Date(data["reservation_date"]).getDay() + 1 === 2) {
@@ -62,7 +65,7 @@ function validateReservation(req, res, next) {
       status: 400,
       message: `We are closed on Tuesdays, please pick a day when we are open!`,
     });
-  } else if (Date.parse(data["reservation_date"]) < Date.now()) {
+  } else if (reservation < now) {
     next({
       status: 400,
       message: `Reservation must be reserved for a date in the future.`,

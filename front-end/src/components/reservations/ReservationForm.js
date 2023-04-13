@@ -42,12 +42,13 @@ export default function ReservationForm({
           <input
             id="mobile_number"
             name="mobile_number"
-            type="text"
+            type="tel"
             className="form-control"
             required
-            placeholder="Enter Mobile Number Here"
+            placeholder="Enter Mobile Number Here (XXX-XXX-XXXX)"
             onChange={handleChange}
             value={formData.mobile_number}
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
           />
         </div>
         <div className="form-group">
