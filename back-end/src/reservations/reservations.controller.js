@@ -57,10 +57,12 @@ function validateReservation(req, res, next) {
   const { data = {} } = req.body;
   const { reservation_date, reservation_time } = req.body.data;
   const reservation = new Date(`${reservation_date} PDT`).setHours(reservation_time.substring(0, 2), reservation_time.substring(3));
+  const date = new Date(reservation_date);
+  const day = date.getUTCDay();
   const now = Date.now();
   let temp_reservation_time =
     data["reservation_time"] && data["reservation_time"].replace(":", "");
-  if (new Date(data["reservation_date"]).getDay() + 1 === 2) {
+  if (day === 2) {
     next({
       status: 400,
       message: `We are closed on Tuesdays, please pick a day when we are open!`,
@@ -106,6 +108,19 @@ function validPeople(req, res, next) {
   }
   next();
 }
+
+function validPhone(req, res, next) {
+  const { data = {} } = req.body;
+  const mobileNumber = data["mobile_number"];
+  if (!/^[0-9 -]+$/.test(mobileNumber)) {
+    return next({
+      status: 400,
+      message: "Phone number should contain only numbers",
+    });
+  }
+  next();
+}
+
 
 async function reservationExists(req, res, next) {
   const { reservation_id } = req.params;
@@ -204,6 +219,7 @@ module.exports = {
     validDate,
     validTime,
     validPeople,
+    validPhone,
     validateReservation,
     bookedCheck,
     asyncErrorBoundary(create),
@@ -222,6 +238,7 @@ module.exports = {
     validDate,
     validTime,
     validPeople,
+    validPhone,
     validateReservation,
     bookedCheck,
     asyncErrorBoundary(update),

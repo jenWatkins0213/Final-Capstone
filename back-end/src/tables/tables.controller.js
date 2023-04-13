@@ -129,10 +129,10 @@ async function update(req, res) {
     ...res.locals.table,
     reservation_id: req.body.data.reservation_id,
   };
-  console.log(updatedTable);
+  // console.log(updatedTable);
   await service.update(updatedTable);
   const data = await service.read(updatedTable.table_id);
-  console.log(data);
+  // console.log(data);
   res.json({ data });
 }
 

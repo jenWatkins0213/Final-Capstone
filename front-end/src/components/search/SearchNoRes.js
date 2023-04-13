@@ -15,7 +15,9 @@ export default function SearchNoRes() {
         </tr>
       </thead>
       <tbody>
-        <td>No reservations found</td>
+        <tr>
+          <td>No reservations found</td>
+        </tr>
       </tbody>
     </table>
   );

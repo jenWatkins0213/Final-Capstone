@@ -48,7 +48,7 @@ export default function ReservationForm({
             placeholder="Enter Mobile Number Here (XXX-XXX-XXXX)"
             onChange={handleChange}
             value={formData.mobile_number}
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            // pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
           />
         </div>
         <div className="form-group">
