@@ -56,14 +56,10 @@ function validDate(req, res, next) {
 function validateReservation(req, res, next) {
   const { data = {} } = req.body;
   const { reservation_date, reservation_time } = req.body.data;
-
-// for today and future reservations
-  const reservation = new Date(`${reservation_date} PDT`).setHours(reservation_time.substring(0, 2), reservation_time.substring(3)); const now = Date.now();
-
-  // for tuesdays
+  const reservation = new Date(`${reservation_date} PDT`).setHours(reservation_time.substring(0, 2), reservation_time.substring(3));
   const date = new Date(reservation_date);
   const day = date.getUTCDay();
- 
+  const now = Date.now();
   let temp_reservation_time =
     data["reservation_time"] && data["reservation_time"].replace(":", "");
   if (day === 2) {
@@ -90,7 +86,6 @@ function validateReservation(req, res, next) {
   }
   next();
 }
-
 function validTime(req, res, next) {
   const { data = {} } = req.body;
   if (!data["reservation_time"].match(/[0-9]{2}:[0-9]{2}/)) {
