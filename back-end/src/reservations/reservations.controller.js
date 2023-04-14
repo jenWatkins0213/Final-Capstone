@@ -56,10 +56,14 @@ function validDate(req, res, next) {
 function validateReservation(req, res, next) {
   const { data = {} } = req.body;
   const { reservation_date, reservation_time } = req.body.data;
-  const reservation = new Date(`${reservation_date} PDT`).setHours(reservation_time.substring(0, 2), reservation_time.substring(3));
+
+// for today and future reservations
+  const reservation = new Date(`${reservation_date} PDT`).setHours(reservation_time.substring(0, 2), reservation_time.substring(3)); const now = Date.now();
+
+  // for tuesdays
   const date = new Date(reservation_date);
   const day = date.getUTCDay();
-  const now = Date.now();
+ 
   let temp_reservation_time =
     data["reservation_time"] && data["reservation_time"].replace(":", "");
   if (day === 2) {
@@ -121,6 +125,29 @@ function validPhone(req, res, next) {
   next();
 }
 
+
+function searchValid (req,res,next) {
+  const {mobile_number} = req.query;
+  const {date} = req.query;
+
+  if(date) {
+    next();
+    return;
+  }
+
+  if(!mobile_number) {
+    next();
+    return;
+  }
+
+  if(!/^[0-9 -]+$/.test(mobile_number)) {
+    return next({
+      status: 400,
+      message: "Search should contain only numbers",
+    });
+  }
+  next()
+}
 
 async function reservationExists(req, res, next) {
   const { reservation_id } = req.params;
@@ -224,7 +251,7 @@ module.exports = {
     bookedCheck,
     asyncErrorBoundary(create),
   ],
-  list: asyncErrorBoundary(list),
+  list: [searchValid,asyncErrorBoundary(list)],
   read: [asyncErrorBoundary(reservationExists), read],
   updateStatus: [
     asyncErrorBoundary(reservationExists),
